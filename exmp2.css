@@ -1,0 +1,204 @@
+/* ==========================================================================
+   STYLES DE BASE (approche "mobile first" = on pense d'abord au téléphone)
+   Ces règles s'appliquent à TOUTES les tailles d'écran par défaut.
+   On commence petit (téléphone) puis on AJOUTE/MODIFIE des styles au fur
+   et à mesure que l'écran devient plus grand (tablette, puis ordinateur).
+   ========================================================================== */
+
+*{
+  /* * = tous les éléments de la page, sans exception */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #000;
+  background-color: white;
+  line-height: 1.5; /* espace entre les lignes de texte, pour une lecture plus confortable */
+}
+
+.container{
+  /* une boîte invisible qui centre le contenu et gère les marges sur les côtés */
+  width: 100%;
+  padding: 0 1rem;
+  margin: 0 auto; /* centre horizontalement */
+}
+
+header{
+  width: 100%;
+  padding: 5%;
+  background-color: #8c9a38;
+}
+
+img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Menu mobile : caché par défaut, s'ouvre grâce au bouton hamburger (le JavaScript ajoute la classe "open") */
+nav{
+  display: none;
+}
+nav.open{
+  display: block; /* dès que la classe "open" est ajoutée, le menu redevient visible */
+}
+
+.hamburger{
+  display: block;
+  background: none;
+  border: none;
+  position: absolute;
+  z-index: 2;
+  top: 30px;
+  right: 30px;
+  color: #ffffff;
+  font-size: 1.5em;
+}
+
+/* Grille simple à 1 seule colonne sur téléphone (les cartes s'empilent verticalement) */
+.grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+h1{
+  font-size: 1.5rem;
+  margin: 3vh auto;
+}
+
+h2{
+  font-size: 1.25rem;
+}
+
+p{
+  font-size: 1rem;
+}
+
+
+/* ==========================================================================
+   TÉLÉPHONES (portrait et paysage)
+   Environ 320px jusqu'à 599px de large.
+   Ce sont les styles de base ci-dessus qui s'appliquent — pas besoin de
+   "@media" puisque c'est déjà la base pensée pour mobile. Le bloc juste en
+   dessous ne concerne que les téléphones un peu plus larges (ex: en mode
+   paysage, tourné sur le côté).
+   ========================================================================== */
+@media only screen and (min-width: 480px){
+  /* Ce bloc s'active seulement si l'écran fait AU MOINS 480px de large */
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+    /* passe de 1 à 2 colonnes */
+  }
+}
+
+
+/* ==========================================================================
+   TABLETTES / IPAD (portrait et paysage)
+   iPad Mini/Air/Pro en portrait ~= 768px à 834px
+   iPad en paysage ~= 1024px à 1194px
+   On cible la plage classique des tablettes avec min-width: 600px (début
+   tablette) jusqu'à 1024px (juste avant que les styles ordinateur prennent le relais).
+   ========================================================================== */
+@media only screen and (min-width: 600px) and (max-width: 1024px){
+  .container{
+    padding: 0 2rem; /* un peu plus d'espace sur les côtés que sur mobile */
+  }
+
+  header{
+    padding: 3%;
+  }
+
+  /* On cache le bouton hamburger et on affiche directement le menu complet, comme sur ordinateur */
+  .hamburger{
+    display: none;
+  }
+  nav{
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .grid{
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  h1{
+    font-size: 2rem;
+  }
+  h2{
+    font-size: 1.5rem;
+  }
+}
+
+/* Réglage précis pour iPad en mode portrait (768px - 834px) */
+@media only screen and (min-width: 768px) and (max-width: 834px) and (orientation: portrait){
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Réglage précis pour iPad en mode paysage (1024px - 1194px) */
+@media only screen and (min-width: 1024px) and (max-width: 1194px) and (orientation: landscape){
+  .grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* ==========================================================================
+   ORDINATEURS / BUREAU / PORTABLES
+   Tout ce qui fait 1025px de large ou plus (après la fin des tablettes en paysage).
+   ========================================================================== */
+@media only screen and (min-width: 1025px){
+  .container{
+    max-width: 1200px; /* le contenu ne s'étire plus au-delà de 1200px, même sur très grand écran */
+    padding: 0 3rem;
+  }
+
+  header{
+    padding: 2% 5%;
+    display: flex;
+    justify-content: space-between; /* logo à gauche, menu à droite */
+    align-items: center;
+  }
+
+  .hamburger{
+    display: none;
+  }
+  nav{
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+  }
+
+  .grid{
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  h1{
+    font-size: 2.5rem;
+  }
+  h2{
+    font-size: 1.75rem;
+  }
+  p{
+    font-size: 1.05rem;
+  }
+}
+
+/* Très grands écrans (1440px et plus) */
+@media only screen and (min-width: 1440px){
+  .container{
+    max-width: 1400px;
+  }
+
+  h1{
+    font-size: 3rem;
+  }
+}

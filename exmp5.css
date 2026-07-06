@@ -1,0 +1,528 @@
+/* ==========================================================================
+   LES VARIABLES (les "couleurs et réglages de base" du site)
+   On les écrit une seule fois ici, puis on les réutilise partout avec var(--nom).
+   Comme ça, si on veut changer la couleur principale du site, on la change
+   à UN seul endroit au lieu de la chercher partout dans le fichier.
+   ========================================================================== */
+:root{
+  --color-primary: #6c5ce7;       /* la couleur violette principale du site */
+  --color-primary-dark: #5a4bd1;  /* une version plus foncée, utilisée quand on survole avec la souris */
+  --color-accent: #00d1b2;        /* une couleur turquoise pour de petits détails */
+  --color-dark: #1a1a2e;          /* un bleu très foncé, presque noir, pour les textes/fonds sombres */
+  --color-text: #333333;          /* la couleur du texte normal (gris foncé, plus doux que le noir pur) */
+  --color-muted: #6b7280;         /* un gris plus clair pour le texte moins important */
+  --color-bg: #ffffff;            /* le fond blanc de la page */
+  --color-bg-alt: #f7f7fb;        /* un fond légèrement gris, pour varier certaines sections */
+  --radius: 12px;                 /* à quel point les coins des boîtes sont arrondis */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);  /* une petite ombre légère */
+  --shadow-md: 0 10px 30px rgba(0,0,0,0.10); /* une ombre plus grosse, pour les effets au survol */
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Ces deux lignes ci-dessus = la police d'écriture. On donne une liste de polices :
+     l'ordinateur utilise la première qu'il trouve déjà installée (donc pas de téléchargement) */
+  --container-width: 1200px;      /* la largeur maximale du contenu, pour ne pas que ça s'étire à l'infini sur grand écran */
+  --transition: 0.25s ease;       /* la vitesse des petites animations (0.25 seconde, en douceur) */
+}
+
+/* ==========================================================================
+   RÉINITIALISATION (on remet tout à zéro avant de commencer)
+   Chaque navigateur ajoute ses propres espacements par défaut aux éléments.
+   On les enlève tous ici pour partir sur une base propre et identique partout.
+   ========================================================================== */
+*{
+  margin: 0;    /* enlève les espaces extérieurs par défaut */
+  padding: 0;   /* enlève les espaces intérieurs par défaut */
+  box-sizing: border-box; /* fait en sorte que les marges internes ne cassent pas la largeur qu'on a choisie */
+}
+
+html{
+  scroll-behavior: smooth;
+  /* quand on clique sur un lien du menu (ex: "Contact"), la page défile
+     en douceur au lieu de "sauter" brutalement à la section */
+}
+
+body{
+  font-family: var(--font-body); /* applique la police définie plus haut à tout le texte */
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6; /* espace entre les lignes de texte, pour que ce soit plus facile à lire */
+}
+
+img{
+  width: 100%;   /* une image ne dépasse jamais la largeur de sa boîte */
+  height: auto;  /* la hauteur s'ajuste automatiquement pour ne pas déformer l'image */
+  display: block;
+}
+
+a{
+  text-decoration: none; /* enlève le soulignement bleu par défaut des liens */
+  color: inherit;         /* le lien prend la couleur du texte autour de lui, pas le bleu par défaut */
+}
+
+ul{
+  list-style: none; /* enlève les petits points (puces) devant les listes */
+}
+
+.container{
+  width: 100%;
+  max-width: var(--container-width); /* le contenu ne s'étire jamais plus large que 1200px */
+  margin: 0 auto;   /* centre la boîte horizontalement */
+  padding: 0 1.25rem; /* petit espace à gauche et à droite pour ne pas coller aux bords de l'écran */
+}
+
+.section{
+  padding: 4rem 0; /* un grand espace au-dessus et en dessous de chaque grande section de la page */
+}
+
+.section-alt{
+  background-color: var(--color-bg-alt); /* fond légèrement gris, pour distinguer cette section des autres */
+}
+
+.section-header{
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem; /* centré, avec un espace en dessous avant le contenu qui suit */
+}
+
+.section-header h2{
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-dark);
+}
+
+.section-header p{
+  color: var(--color-muted);
+}
+
+/* ------------------ LES BOUTONS ------------------ */
+.btn{
+  display: inline-block;
+  padding: 0.85rem 2rem;       /* la taille du bouton (espace intérieur) */
+  border-radius: var(--radius); /* coins arrondis */
+  font-weight: 600;             /* texte un peu gras */
+  transition: transform var(--transition), box-shadow var(--transition), background-color var(--transition);
+  /* "transition" = quand une propriété change (ex: la couleur), fais-le en douceur au lieu de d'un coup */
+  cursor: pointer; /* la souris devient une petite main pour montrer que c'est cliquable */
+  border: none;
+}
+
+.btn-primary{
+  background-color: var(--color-primary); /* bouton violet plein */
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover{
+  /* ":hover" = ce qui se passe quand on passe la souris AU-DESSUS de l'élément, sans cliquer */
+  background-color: var(--color-primary-dark); /* devient plus foncé */
+  transform: translateY(-2px); /* remonte très légèrement, comme s'il "flottait" */
+  box-shadow: var(--shadow-md); /* l'ombre devient plus grande, pour accentuer l'effet de flottement */
+}
+
+.btn-outline{
+  background-color: transparent; /* pas de fond, juste un contour */
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary); /* le contour visible du bouton */
+}
+
+.btn-outline:hover{
+  background-color: var(--color-primary); /* au survol, le bouton se remplit de couleur */
+  color: #fff;
+}
+
+
+/* ==========================================================================
+   L'EN-TÊTE DU SITE ET LE MENU (tout en haut de la page)
+   ========================================================================== */
+header{
+  position: sticky;
+  top: 0;
+  /* "sticky" = l'en-tête RESTE COLLÉ en haut de l'écran même quand on fait défiler la page vers le bas */
+  z-index: 100;
+  /* "z-index" = qui passe au-dessus de qui, comme des feuilles empilées. Plus le chiffre est grand,
+     plus l'élément est "au-dessus" des autres visuellement */
+  background-color: rgba(255,255,255,0.9); /* fond blanc presque opaque (0.9 = 90% visible) */
+  backdrop-filter: blur(8px);
+  /* floute légèrement ce qu'il y a DERRIÈRE l'en-tête, comme un effet de verre dépoli */
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar{
+  display: flex;
+  /* "flex" = range les éléments à l'intérieur en ligne, côte à côte (au lieu de les empiler) */
+  align-items: center;        /* centre-les verticalement */
+  justify-content: space-between; /* pousse le logo à gauche et le menu à droite, avec l'espace au milieu */
+  padding: 1rem 1.25rem;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.logo{
+  font-size: 1.4rem;
+  font-weight: 800; /* très gras */
+  color: var(--color-dark);
+}
+
+.logo span{
+  color: var(--color-primary); /* le petit point après "Nova" est coloré différemment */
+}
+
+.hamburger{
+  /* le bouton "≡" qui n'apparaît que sur téléphone/tablette pour ouvrir le menu */
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--color-dark);
+  cursor: pointer;
+  z-index: 200; /* toujours au-dessus de tout, même quand le menu est ouvert */
+}
+
+nav{
+  position: fixed;
+  /* "fixed" = reste à un endroit précis de l'écran, même si on fait défiler la page */
+  top: 0;
+  right: -100%;
+  /* "-100%" = le menu est caché complètement HORS de l'écran, à droite, par défaut (sur mobile) */
+  height: 100vh; /* prend toute la hauteur de l'écran */
+  width: 70%;
+  max-width: 320px;
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-md);
+  padding: 6rem 2rem;
+  transition: right var(--transition); /* glisse en douceur quand il s'ouvre/se ferme */
+  z-index: 150;
+}
+
+nav.open{
+  /* Cette classe "open" est ajoutée par le petit bouton hamburger (voir le fichier HTML)
+     quand on clique dessus. Elle fait REVENIR le menu dans l'écran. */
+  right: 0;
+}
+
+nav ul{
+  display: flex;
+  flex-direction: column; /* les liens du menu s'empilent verticalement (mobile) */
+  gap: 1.5rem;            /* espace entre chaque lien */
+  font-weight: 600;
+}
+
+nav a{
+  position: relative;
+  color: var(--color-dark);
+}
+
+nav a:hover{
+  color: var(--color-primary); /* le lien change de couleur quand on passe la souris dessus */
+}
+
+
+/* ==========================================================================
+   LA SECTION D'ACCUEIL "HERO" (le grand bandeau violet tout en haut)
+   ========================================================================== */
+.hero{
+  background: linear-gradient(135deg, var(--color-primary) 0%, #a29bfe 100%);
+  /* "linear-gradient" = un fond en dégradé qui passe doucement d'une couleur violette à une autre */
+  color: #fff;
+  padding: 5rem 1.25rem; /* beaucoup d'espace en haut/bas pour que ça "respire" */
+  text-align: center;
+}
+
+.hero h1{
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.hero p{
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin: 0 auto 2rem; /* centré, avec de l'espace en dessous avant les boutons */
+  opacity: 0.95; /* légèrement transparent, pour un rendu plus doux */
+}
+
+.hero .btn-outline{
+  /* dans le bandeau violet, le bouton "contour" doit être blanc plutôt que violet, sinon on ne le verrait pas bien */
+  border-color: #fff;
+  color: #fff;
+}
+
+.hero .btn-outline:hover{
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+.hero-actions{
+  display: flex;
+  flex-direction: column; /* les 2 boutons sont empilés l'un sur l'autre sur mobile */
+  gap: 1rem;
+  align-items: center;
+}
+
+
+/* ==========================================================================
+   LA GRILLE DE CARTES "POURQUOI NOUS CHOISIR"
+   ========================================================================== */
+.grid{
+  display: grid;
+  /* "grid" = range les éléments en tableau (lignes et colonnes) qui s'adapte tout seul */
+  grid-template-columns: 1fr;
+  /* "1fr" = une seule colonne qui prend toute la largeur (donc les cartes s'empilent, sur mobile) */
+  gap: 1.5rem; /* espace entre chaque carte */
+}
+
+.card{
+  background-color: #fff;
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm); /* légère ombre pour donner un effet de "carte" qui flotte un peu */
+  transition: transform var(--transition), box-shadow var(--transition);
+  text-align: center;
+}
+
+.card:hover{
+  transform: translateY(-6px); /* la carte remonte légèrement quand on passe la souris dessus */
+  box-shadow: var(--shadow-md); /* et l'ombre s'agrandit, pour accentuer l'effet */
+}
+
+.card .icon{
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1.25rem; /* centré, avec de l'espace en dessous */
+  border-radius: 50%; /* 50% = fait un cercle parfait */
+  background-color: rgba(108, 92, 231, 0.12); /* violet très clair et transparent, en fond du rond */
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centre l'icône (emoji) à l'intérieur du rond */
+  font-size: 1.5rem;
+}
+
+.card h3{
+  margin-bottom: 0.5rem;
+  color: var(--color-dark);
+}
+
+.card p{
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+
+/* ==========================================================================
+   LA SECTION "À PROPOS" (image à côté du texte)
+   ========================================================================== */
+.split{
+  display: grid;
+  grid-template-columns: 1fr;
+  /* sur mobile : une seule colonne, donc l'image est au-dessus et le texte en dessous */
+  gap: 2.5rem;
+  align-items: center; /* centre verticalement l'image et le texte l'un par rapport à l'autre */
+}
+
+.split img{
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.split h2{
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--color-dark);
+}
+
+.split p{
+  color: var(--color-muted);
+  margin-bottom: 1.5rem;
+}
+
+
+/* ==========================================================================
+   LES TÉMOIGNAGES (avis clients)
+   ========================================================================== */
+.testimonial{
+  background-color: #fff;
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.testimonial p{
+  font-style: italic; /* le texte de l'avis est en italique, pour bien montrer que c'est une citation */
+  color: var(--color-text);
+  margin-bottom: 1.25rem;
+}
+
+.testimonial .author{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* espace entre le petit rond (avatar) et le nom/métier */
+}
+
+.testimonial .avatar{
+  /* le petit rond coloré avec l'initiale de la personne (à la place d'une vraie photo) */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%; /* cercle parfait */
+  background-color: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.testimonial .author strong{
+  display: block; /* force le nom à passer sur sa propre ligne, au-dessus du métier */
+  color: var(--color-dark);
+}
+
+.testimonial .author span{
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+
+/* ==========================================================================
+   LE BANDEAU D'APPEL À L'ACTION (fond foncé, juste avant le pied de page)
+   ========================================================================== */
+.cta-banner{
+  background-color: var(--color-dark);
+  color: #fff;
+  text-align: center;
+  border-radius: var(--radius);
+  padding: 3rem 1.5rem;
+  margin: 0 1.25rem; /* petit espace sur les côtés pour que le fond foncé ne touche pas les bords de l'écran */
+}
+
+.cta-banner h2{
+  margin-bottom: 1rem;
+}
+
+.cta-banner p{
+  color: rgba(255,255,255,0.75); /* blanc légèrement transparent, pour un contraste plus doux que blanc pur */
+  margin-bottom: 1.5rem;
+}
+
+
+/* ==========================================================================
+   LE PIED DE PAGE (footer) — tout en bas du site
+   ========================================================================== */
+footer{
+  background-color: var(--color-dark);
+  color: rgba(255,255,255,0.8);
+  margin-top: 4rem;
+}
+
+.footer-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  /* sur mobile : une seule colonne, donc les 4 blocs (Nova / Company / Resources / Contact)
+     s'empilent les uns sous les autres */
+  gap: 2rem;
+  padding: 3rem 1.25rem 2rem;
+}
+
+.footer-grid h4{
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.footer-grid ul{
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-grid a:hover{
+  color: var(--color-accent); /* les liens du pied de page deviennent turquoise au survol */
+}
+
+.footer-bottom{
+  /* la toute dernière ligne, avec le "copyright" */
+  text-align: center;
+  padding: 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.1); /* une fine ligne de séparation au-dessus */
+  font-size: 0.85rem;
+}
+
+
+/* ==========================================================================
+   TABLETTES / IPAD (à partir de 600px de large)
+   Tout ce qui est écrit dans ce bloc "@media" ne s'applique QUE si l'écran
+   fait AU MOINS 600 pixels de large (donc pas sur un petit téléphone).
+   ========================================================================== */
+@media only screen and (min-width: 600px){
+  .hero h1{
+    font-size: 2.6rem; /* le gros titre devient plus grand sur un écran plus large */
+  }
+
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+    /* "repeat(2, 1fr)" = maintenant on a 2 colonnes égales au lieu d'une seule */
+  }
+
+  .footer-grid{
+    grid-template-columns: repeat(2, 1fr); /* le pied de page passe à 2 colonnes */
+  }
+
+  .hero-actions{
+    flex-direction: row; /* les 2 boutons se mettent côte à côte au lieu d'être empilés */
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 1024px){
+  /* Ce bloc s'applique UNIQUEMENT entre 600px et 1024px, donc surtout pour les iPad */
+  .split{
+    grid-template-columns: 1fr 1fr;
+    /* l'image et le texte de la section "À propos" se mettent côte à côte (2 colonnes égales) */
+  }
+}
+
+
+/* ==========================================================================
+   ORDINATEURS / GRANDS ÉCRANS (à partir de 1025px de large)
+   ========================================================================== */
+@media only screen and (min-width: 1025px){
+  .hamburger{
+    display: none;
+    /* sur ordinateur, on n'a plus besoin du bouton "≡", on cache le menu déroulant mobile */
+  }
+
+  nav{
+    /* Le menu, qui était caché/glissant sur mobile, redevient une simple ligne de liens normale */
+    position: static;
+    height: auto;
+    width: auto;
+    max-width: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  nav ul{
+    flex-direction: row; /* les liens du menu sont maintenant côte à côte, horizontalement */
+    gap: 2.5rem;
+  }
+
+  .hero h1{
+    font-size: 3.2rem; /* le titre principal est encore plus grand sur grand écran */
+  }
+
+  .hero p{
+    font-size: 1.15rem;
+  }
+
+  .grid{
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les cartes et les témoignages */
+  }
+
+  .split{
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem; /* plus d'espace entre l'image et le texte sur grand écran */
+  }
+
+  .footer-grid{
+    grid-template-columns: repeat(4, 1fr); /* le pied de page affiche ses 4 colonnes côte à côte */
+  }
+}

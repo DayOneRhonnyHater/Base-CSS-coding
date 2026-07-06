@@ -1,0 +1,152 @@
+/* ==========================================================================
+   EXEMPLES D'INTÉGRATION DE POLICES D'ÉCRITURE (fonts)
+   Ce fichier montre les différentes façons d'ajouter des polices personnalisées
+   à un projet :
+   1. @font-face avec des fichiers stockés localement (hébergés par vous)
+   2. @font-face avec plusieurs graisses/styles (gras, italique...)
+   3. @font-face avec une police "variable" (une plage de graisses dans un seul fichier)
+   4. @font-face avec local() pour éviter de télécharger si déjà installée
+   5. @import depuis un service de polices (Google Fonts) - alternative au <link>
+   6. La liste de polices "système" (aucun téléchargement, l'option la plus rapide)
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1) @font-face DE BASE — fichier de police hébergé par vous-même
+   "src" pointe vers des fichiers qui se trouvent dans votre propre projet
+   (par exemple dans un dossier /fonts/).
+   woff2 en premier = meilleure compression, pour les navigateurs récents.
+   woff = solution de secours pour les navigateurs plus anciens.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyCustomFont'; /* le nom qu'on utilisera plus bas pour appeler cette police */
+  src: url('fonts/MyCustomFont.woff2') format('woff2'),
+       url('fonts/MyCustomFont.woff') format('woff');
+  font-weight: normal; /* ce fichier correspond à la graisse "normale" (pas grasse) */
+  font-style: normal;  /* et au style "normal" (pas en italique) */
+  font-display: swap;
+  /* affiche tout de suite un texte de remplacement, puis bascule vers la
+     police personnalisée une fois qu'elle a fini de se télécharger */
+}
+
+
+/* --------------------------------------------------------------------------
+   2) PLUSIEURS GRAISSES / STYLES pour la même famille de police
+   Chaque bloc @font-face = une combinaison précise (gras+italique, etc.).
+   Le navigateur choisit automatiquement le bon fichier dès que vous utilisez
+   font-weight / font-style sur un élément qui a ce font-family.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyCustomFont';
+  src: url('fonts/MyCustomFont-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'MyCustomFont';
+  src: url('fonts/MyCustomFont-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'MyCustomFont';
+  src: url('fonts/MyCustomFont-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   3) POLICE "VARIABLE" — un seul fichier couvre toute une plage de graisses
+   (et parfois de largeurs). On déclare font-weight: <min> <max> pour dire
+   quelle plage ce fichier peut gérer, puis on utilise n'importe quel chiffre
+   (ex: 450) dans notre CSS, et le navigateur dessine exactement cette graisse
+   à partir du seul fichier.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyVariableFont';
+  src: url('fonts/MyVariableFont.woff2') format('woff2-variations');
+  font-weight: 100 900;   /* couvre toutes les graisses, de très fine à très grasse */
+  font-stretch: 75% 125%; /* couvre les largeurs, de condensée à étirée */
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   4) local() EN PREMIER — vérifie si la police est déjà installée sur
+   l'ordinateur/téléphone de la personne AVANT de télécharger quoi que ce soit.
+   Ça économise de la bande passante si, par exemple, la personne a déjà
+   une police "sous licence" installée sur son appareil.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyLicensedFont';
+  src: local('MyLicensedFont'),
+       local('My Licensed Font'),
+       url('fonts/MyLicensedFont.woff2') format('woff2');
+  font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   5) @import DEPUIS UN SERVICE DE POLICES (ex: Google Fonts)
+   C'est une alternative à ajouter une balise <link> dans le <head> du HTML.
+   ATTENTION : @import doit être tout en haut du fichier CSS pour fonctionner
+   — ici il est placé à cet endroit juste pour le regroupement/la démonstration.
+   Dans un vrai projet : soit on le met en ligne 1, soit (mieux) on utilise
+   une balise <link> dans le HTML (ça charge plus vite, en parallèle).
+   -------------------------------------------------------------------------- */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
+
+
+/* --------------------------------------------------------------------------
+   6) LISTE DE POLICES "SYSTÈME" — aucun téléchargement, utilise directement
+   la police déjà présente sur l'ordinateur/téléphone de la personne.
+   L'option la plus rapide possible, zéro requête réseau, mais l'apparence
+   varie légèrement entre Windows/Mac/Linux/iOS.
+   -------------------------------------------------------------------------- */
+.system-font{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               Helvetica, Arial, sans-serif;
+}
+
+
+/* ==========================================================================
+   APPLICATION DES POLICES (comment on les utilise concrètement)
+   ========================================================================== */
+
+body{
+  /* On demande la police personnalisée en premier, puis une police de secours
+     générique au cas où le fichier personnalisé ne se chargerait pas */
+  font-family: 'MyCustomFont', Arial, sans-serif;
+}
+
+.variable-heading{
+  font-family: 'MyVariableFont', sans-serif;
+  font-weight: 450; /* n'importe quel chiffre entre 100 et 900 fonctionne avec une police variable */
+}
+
+.licensed-text{
+  font-family: 'MyLicensedFont', Georgia, serif;
+}
+
+strong{
+  /* <strong> = texte important, mis en gras par défaut par le navigateur */
+  font-weight: bold; /* déclenche le bloc @font-face "Bold" défini plus haut */
+}
+
+em{
+  /* <em> = texte mis en valeur, en italique par défaut */
+  font-style: italic; /* déclenche le bloc @font-face "Italic" défini plus haut */
+}
+
+strong em, em strong{
+  /* quand un texte est à la fois en <strong> ET en <em> */
+  font-weight: bold;
+  font-style: italic; /* déclenche le bloc @font-face "BoldItalic" défini plus haut */
+}

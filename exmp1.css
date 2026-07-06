@@ -1,76 +1,89 @@
 *{
-margin:0;
-padding:0;
-box-sizing: border-box;
+  /* L'étoile * veut dire "TOUS les éléments de la page", sans exception */
+  margin:0;   /* enlève l'espace extérieur que les navigateurs ajoutent par défaut */
+  padding:0;  /* enlève l'espace intérieur ajouté par défaut */
+  box-sizing: border-box; /* évite que les espaces internes agrandissent la taille des boîtes */
 }
 body{
-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-color: #000;
-background-color: white;
+  /* <body> = tout ce qui s'affiche réellement sur la page */
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  /* liste de polices d'écriture : l'ordinateur utilise la première qu'il connaît */
+  color: #000; /* couleur du texte : noir */
+  background-color: white; /* couleur de fond de toute la page : blanc */
 }
 header{
-width: 100%;
-height: auto;
-padding: 5%;
-background-color:#8c9a38;
-font-size: 2rem;
-/*display: flex;
-justify-content:space-between;*/
+  /* le bandeau tout en haut du site */
+  width: 100%;
+  height: auto; /* la hauteur s'ajuste automatiquement selon le contenu */
+  padding: 5%; /* espace intérieur, proportionnel à la largeur de l'écran */
+  background-color:#8c9a38; /* couleur de fond vert olive */
+  font-size: 2rem; /* taille du texte à l'intérieur */
+  /*display: flex;
+  justify-content:space-between;*/
+  /* ces 2 lignes sont "commentées" (désactivées), donc ignorées par le navigateur pour l'instant */
 }
 header div{
-width: 40%;
-height: auto;
-background-color:none;
+  /* toutes les boîtes <div> qui se trouvent À L'INTÉRIEUR du header */
+  width: 40%;
+  height: auto;
+  background-color:none; /* pas de couleur de fond */
 }
 img{
-width: 100%;
-height: auto;
+  /* toutes les images du site */
+  width: 100%;  /* une image ne dépasse jamais la largeur de sa boîte */
+  height: auto; /* la hauteur s'ajuste toute seule, sans déformer l'image */
 }
 nav{
-display:none;
+  /* le menu de navigation */
+  display:none; /* caché par défaut (probablement affiché plus tard via JavaScript) */
 }
 .hamburger{
-background: none;
-border: none;
-position: absolute;
-z-index: 2;
-top:30px;
-right:30px;
-line-height: 45px;
-color: #ffffff;
-font-size: 0.75em;
+  /* le petit bouton "≡" pour ouvrir le menu sur mobile */
+  background: none;
+  border: none;
+  position: absolute; /* placé à un endroit précis, par-dessus le reste du contenu */
+  z-index: 2; /* reste au-dessus des autres éléments qui se chevauchent */
+  top:30px;   /* à 30px du haut */
+  right:30px; /* à 30px de la droite */
+  line-height: 45px;
+  color: #ffffff; /* texte blanc */
+  font-size: 0.75em;
 }
 .cross{
-background: none;
-border: none;
-position: absolute;
-z-index: 2;
-top:30px;
-right:30px;
-line-height: 45px;
-color: #ffffff;
-font-size: 2em;
+  /* le bouton "X" pour refermer le menu, une fois qu'il est ouvert */
+  background: none;
+  border: none;
+  position: absolute;
+  z-index: 2;
+  top:30px;
+  right:30px;
+  line-height: 45px;
+  color: #ffffff;
+  font-size: 2em;
 }
 .menu{
-width: 100%;
-position: relative;
-top: 45px;
-right: 45px;
-z-index: 1;
-text-align: center;
-font-size: 12px;
-font-weight: bold;
+  /* la boîte qui contient les liens du menu quand il est ouvert */
+  width: 100%;
+  position: relative;
+  top: 45px;
+  right: 45px;
+  z-index: 1;
+  text-align: center; /* le texte est centré */
+  font-size: 12px;
+  font-weight: bold; /* texte en gras */
 }
 .menu ul{
-list-style: none;
+  list-style: none; /* enlève les petits points devant chaque lien de la liste */
 }
 .menu li{
+  /* pas de style particulier ici pour l'instant */
 }
 .menu a{
-text-decoration: none;
+  text-decoration: none; /* enlève le soulignement bleu par défaut des liens */
 }
 h1{
-width: 100%;
-height: auto;
-margin: 3vh auto;
+  /* le plus gros titre de la page */
+  width: 100%;
+  height: auto;
+  margin: 3vh auto; /* centré horizontalement, avec de l'espace au-dessus/en dessous */
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Font Integration Demo - exmp3</title>
+  <link rel="stylesheet" href="exmp3.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">MyBrand</div>
+
+    <button class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')">
+      &#9776;
+    </button>
+
+    <nav>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 class="variable-heading">Font Integration Demo</h1>
+    <!-- utilise la police variable avec une graisse de 450 -->
+
+    <p>
+      This paragraph uses <strong>MyCustomFont-Bold</strong> whenever you see
+      <strong>bold text</strong>, <em>MyCustomFont-Italic</em> whenever you see
+      <em>italic text</em>, and <strong><em>MyCustomFont-BoldItalic</em></strong>
+      when both are combined.
+    </p>
+    <!-- illustre les 4 fichiers de police (normal/gras/italique/gras-italique) déclarés dans le CSS -->
+
+    <p class="licensed-text">
+      This paragraph uses the "licensed font" rule — it first checks if the
+      font is already installed locally via <code>local()</code> before
+      falling back to Georgia.
+    </p>
+
+    <p class="system-font">
+      This paragraph uses the system font stack — no download at all, it
+      just renders in whatever font your operating system already uses
+      (Segoe UI on Windows, San Francisco on Mac, Roboto on Android...).
+    </p>
+  </main>
+
+</body>
+</html>

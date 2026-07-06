@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Demo - exmp2</title>
+  <link rel="stylesheet" href="exmp2.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">MyBrand</div>
+
+    <button class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')">
+      &#9776;
+    </button>
+    <!-- ouvre/ferme le menu en ajoutant la classe "open" sur <nav> -->
+
+    <nav>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Responsive Layout Demo</h1>
+    <p>Resize your browser window (or open this on a phone/iPad/computer) to see the grid below
+       change from 1 column, to 2, to 3, to 4 columns depending on screen width.</p>
+
+    <section class="grid">
+      <!-- nombre de colonnes géré par exmp2.css selon la largeur d'écran -->
+      <div class="card" style="background:#eee; padding:1rem;">Card 1</div>
+      <div class="card" style="background:#ddd; padding:1rem;">Card 2</div>
+      <div class="card" style="background:#eee; padding:1rem;">Card 3</div>
+      <div class="card" style="background:#ddd; padding:1rem;">Card 4</div>
+      <div class="card" style="background:#eee; padding:1rem;">Card 5</div>
+      <div class="card" style="background:#ddd; padding:1rem;">Card 6</div>
+      <div class="card" style="background:#eee; padding:1rem;">Card 7</div>
+      <div class="card" style="background:#ddd; padding:1rem;">Card 8</div>
+    </section>
+  </main>
+
+</body>
+</html>
