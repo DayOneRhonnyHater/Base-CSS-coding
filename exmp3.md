@@ -125,7 +125,7 @@ nav a:hover{
 ```
 
 **Screenshot:**
-![Header](<Capture d'écran 2026-07-06 171536.png>)
+![Header](<header.png>)
 ---
 
 
@@ -208,7 +208,7 @@ nav a:hover{
 ```
 
 **Screenshot:**
-![Why chose...](<Capture d'écran 2026-07-06 171557.png>)
+![Why chose...](<whychose.png>)
 
 ---
 
@@ -293,4 +293,4 @@ footer{
 ```
 
 **Screenshot:**
-![Footer](<image.png>)
+![Footer](<footer.png>)
