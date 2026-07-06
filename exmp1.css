@@ -1,0 +1,76 @@
+*{
+margin:0;
+padding:0;
+box-sizing: border-box;
+}
+body{
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+color: #000;
+background-color: white;
+}
+header{
+width: 100%;
+height: auto;
+padding: 5%;
+background-color:#8c9a38;
+font-size: 2rem;
+/*display: flex;
+justify-content:space-between;*/
+}
+header div{
+width: 40%;
+height: auto;
+background-color:none;
+}
+img{
+width: 100%;
+height: auto;
+}
+nav{
+display:none;
+}
+.hamburger{
+background: none;
+border: none;
+position: absolute;
+z-index: 2;
+top:30px;
+right:30px;
+line-height: 45px;
+color: #ffffff;
+font-size: 0.75em;
+}
+.cross{
+background: none;
+border: none;
+position: absolute;
+z-index: 2;
+top:30px;
+right:30px;
+line-height: 45px;
+color: #ffffff;
+font-size: 2em;
+}
+.menu{
+width: 100%;
+position: relative;
+top: 45px;
+right: 45px;
+z-index: 1;
+text-align: center;
+font-size: 12px;
+font-weight: bold;
+}
+.menu ul{
+list-style: none;
+}
+.menu li{
+}
+.menu a{
+text-decoration: none;
+}
+h1{
+width: 100%;
+height: auto;
+margin: 3vh auto;
+}
