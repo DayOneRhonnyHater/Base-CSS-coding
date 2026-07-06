@@ -1,204 +1,152 @@
 /* ==========================================================================
-   STYLES DE BASE (approche "mobile first" = on pense d'abord au téléphone)
-   Ces règles s'appliquent à TOUTES les tailles d'écran par défaut.
-   On commence petit (téléphone) puis on AJOUTE/MODIFIE des styles au fur
-   et à mesure que l'écran devient plus grand (tablette, puis ordinateur).
+   EXEMPLES D'INTÉGRATION DE POLICES D'ÉCRITURE (fonts)
+   Ce fichier montre les différentes façons d'ajouter des polices personnalisées
+   à un projet :
+   1. @font-face avec des fichiers stockés localement (hébergés par vous)
+   2. @font-face avec plusieurs graisses/styles (gras, italique...)
+   3. @font-face avec une police "variable" (une plage de graisses dans un seul fichier)
+   4. @font-face avec local() pour éviter de télécharger si déjà installée
+   5. @import depuis un service de polices (Google Fonts) - alternative au <link>
+   6. La liste de polices "système" (aucun téléchargement, l'option la plus rapide)
    ========================================================================== */
 
-*{
-  /* * = tous les éléments de la page, sans exception */
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+/* --------------------------------------------------------------------------
+   1) @font-face DE BASE — fichier de police hébergé par vous-même
+   "src" pointe vers des fichiers qui se trouvent dans votre propre projet
+   (par exemple dans un dossier /fonts/).
+   woff2 en premier = meilleure compression, pour les navigateurs récents.
+   woff = solution de secours pour les navigateurs plus anciens.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyCustomFont'; /* le nom qu'on utilisera plus bas pour appeler cette police */
+  src: url('fonts/MyCustomFont.woff2') format('woff2'),
+       url('fonts/MyCustomFont.woff') format('woff');
+  font-weight: normal; /* ce fichier correspond à la graisse "normale" (pas grasse) */
+  font-style: normal;  /* et au style "normal" (pas en italique) */
+  font-display: swap;
+  /* affiche tout de suite un texte de remplacement, puis bascule vers la
+     police personnalisée une fois qu'elle a fini de se télécharger */
 }
+
+
+/* --------------------------------------------------------------------------
+   2) PLUSIEURS GRAISSES / STYLES pour la même famille de police
+   Chaque bloc @font-face = une combinaison précise (gras+italique, etc.).
+   Le navigateur choisit automatiquement le bon fichier dès que vous utilisez
+   font-weight / font-style sur un élément qui a ce font-family.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyCustomFont';
+  src: url('fonts/MyCustomFont-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'MyCustomFont';
+  src: url('fonts/MyCustomFont-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'MyCustomFont';
+  src: url('fonts/MyCustomFont-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   3) POLICE "VARIABLE" — un seul fichier couvre toute une plage de graisses
+   (et parfois de largeurs). On déclare font-weight: <min> <max> pour dire
+   quelle plage ce fichier peut gérer, puis on utilise n'importe quel chiffre
+   (ex: 450) dans notre CSS, et le navigateur dessine exactement cette graisse
+   à partir du seul fichier.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyVariableFont';
+  src: url('fonts/MyVariableFont.woff2') format('woff2-variations');
+  font-weight: 100 900;   /* couvre toutes les graisses, de très fine à très grasse */
+  font-stretch: 75% 125%; /* couvre les largeurs, de condensée à étirée */
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   4) local() EN PREMIER — vérifie si la police est déjà installée sur
+   l'ordinateur/téléphone de la personne AVANT de télécharger quoi que ce soit.
+   Ça économise de la bande passante si, par exemple, la personne a déjà
+   une police "sous licence" installée sur son appareil.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family: 'MyLicensedFont';
+  src: local('MyLicensedFont'),
+       local('My Licensed Font'),
+       url('fonts/MyLicensedFont.woff2') format('woff2');
+  font-display: swap;
+}
+
+
+/* --------------------------------------------------------------------------
+   5) @import DEPUIS UN SERVICE DE POLICES (ex: Google Fonts)
+   C'est une alternative à ajouter une balise <link> dans le <head> du HTML.
+   ATTENTION : @import doit être tout en haut du fichier CSS pour fonctionner
+   — ici il est placé à cet endroit juste pour le regroupement/la démonstration.
+   Dans un vrai projet : soit on le met en ligne 1, soit (mieux) on utilise
+   une balise <link> dans le HTML (ça charge plus vite, en parallèle).
+   -------------------------------------------------------------------------- */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
+
+
+/* --------------------------------------------------------------------------
+   6) LISTE DE POLICES "SYSTÈME" — aucun téléchargement, utilise directement
+   la police déjà présente sur l'ordinateur/téléphone de la personne.
+   L'option la plus rapide possible, zéro requête réseau, mais l'apparence
+   varie légèrement entre Windows/Mac/Linux/iOS.
+   -------------------------------------------------------------------------- */
+.system-font{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               Helvetica, Arial, sans-serif;
+}
+
+
+/* ==========================================================================
+   APPLICATION DES POLICES (comment on les utilise concrètement)
+   ========================================================================== */
 
 body{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: #000;
-  background-color: white;
-  line-height: 1.5; /* espace entre les lignes de texte, pour une lecture plus confortable */
+  /* On demande la police personnalisée en premier, puis une police de secours
+     générique au cas où le fichier personnalisé ne se chargerait pas */
+  font-family: 'MyCustomFont', Arial, sans-serif;
 }
 
-.container{
-  /* une boîte invisible qui centre le contenu et gère les marges sur les côtés */
-  width: 100%;
-  padding: 0 1rem;
-  margin: 0 auto; /* centre horizontalement */
+.variable-heading{
+  font-family: 'MyVariableFont', sans-serif;
+  font-weight: 450; /* n'importe quel chiffre entre 100 et 900 fonctionne avec une police variable */
 }
 
-header{
-  width: 100%;
-  padding: 5%;
-  background-color: #8c9a38;
+.licensed-text{
+  font-family: 'MyLicensedFont', Georgia, serif;
 }
 
-img{
-  width: 100%;
-  height: auto;
-  display: block;
+strong{
+  /* <strong> = texte important, mis en gras par défaut par le navigateur */
+  font-weight: bold; /* déclenche le bloc @font-face "Bold" défini plus haut */
 }
 
-/* Menu mobile : caché par défaut, s'ouvre grâce au bouton hamburger (le JavaScript ajoute la classe "open") */
-nav{
-  display: none;
-}
-nav.open{
-  display: block; /* dès que la classe "open" est ajoutée, le menu redevient visible */
+em{
+  /* <em> = texte mis en valeur, en italique par défaut */
+  font-style: italic; /* déclenche le bloc @font-face "Italic" défini plus haut */
 }
 
-.hamburger{
-  display: block;
-  background: none;
-  border: none;
-  position: absolute;
-  z-index: 2;
-  top: 30px;
-  right: 30px;
-  color: #ffffff;
-  font-size: 1.5em;
-}
-
-/* Grille simple à 1 seule colonne sur téléphone (les cartes s'empilent verticalement) */
-.grid{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-
-h1{
-  font-size: 1.5rem;
-  margin: 3vh auto;
-}
-
-h2{
-  font-size: 1.25rem;
-}
-
-p{
-  font-size: 1rem;
-}
-
-
-/* ==========================================================================
-   TÉLÉPHONES (portrait et paysage)
-   Environ 320px jusqu'à 599px de large.
-   Ce sont les styles de base ci-dessus qui s'appliquent — pas besoin de
-   "@media" puisque c'est déjà la base pensée pour mobile. Le bloc juste en
-   dessous ne concerne que les téléphones un peu plus larges (ex: en mode
-   paysage, tourné sur le côté).
-   ========================================================================== */
-@media only screen and (min-width: 480px){
-  /* Ce bloc s'active seulement si l'écran fait AU MOINS 480px de large */
-  .grid{
-    grid-template-columns: repeat(2, 1fr);
-    /* passe de 1 à 2 colonnes */
-  }
-}
-
-
-/* ==========================================================================
-   TABLETTES / IPAD (portrait et paysage)
-   iPad Mini/Air/Pro en portrait ~= 768px à 834px
-   iPad en paysage ~= 1024px à 1194px
-   On cible la plage classique des tablettes avec min-width: 600px (début
-   tablette) jusqu'à 1024px (juste avant que les styles ordinateur prennent le relais).
-   ========================================================================== */
-@media only screen and (min-width: 600px) and (max-width: 1024px){
-  .container{
-    padding: 0 2rem; /* un peu plus d'espace sur les côtés que sur mobile */
-  }
-
-  header{
-    padding: 3%;
-  }
-
-  /* On cache le bouton hamburger et on affiche directement le menu complet, comme sur ordinateur */
-  .hamburger{
-    display: none;
-  }
-  nav{
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
-  .grid{
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  h1{
-    font-size: 2rem;
-  }
-  h2{
-    font-size: 1.5rem;
-  }
-}
-
-/* Réglage précis pour iPad en mode portrait (768px - 834px) */
-@media only screen and (min-width: 768px) and (max-width: 834px) and (orientation: portrait){
-  .grid{
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Réglage précis pour iPad en mode paysage (1024px - 1194px) */
-@media only screen and (min-width: 1024px) and (max-width: 1194px) and (orientation: landscape){
-  .grid{
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-
-/* ==========================================================================
-   ORDINATEURS / BUREAU / PORTABLES
-   Tout ce qui fait 1025px de large ou plus (après la fin des tablettes en paysage).
-   ========================================================================== */
-@media only screen and (min-width: 1025px){
-  .container{
-    max-width: 1200px; /* le contenu ne s'étire plus au-delà de 1200px, même sur très grand écran */
-    padding: 0 3rem;
-  }
-
-  header{
-    padding: 2% 5%;
-    display: flex;
-    justify-content: space-between; /* logo à gauche, menu à droite */
-    align-items: center;
-  }
-
-  .hamburger{
-    display: none;
-  }
-  nav{
-    display: flex;
-    justify-content: flex-end;
-    gap: 2rem;
-  }
-
-  .grid{
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
-
-  h1{
-    font-size: 2.5rem;
-  }
-  h2{
-    font-size: 1.75rem;
-  }
-  p{
-    font-size: 1.05rem;
-  }
-}
-
-/* Très grands écrans (1440px et plus) */
-@media only screen and (min-width: 1440px){
-  .container{
-    max-width: 1400px;
-  }
-
-  h1{
-    font-size: 3rem;
-  }
+strong em, em strong{
+  /* quand un texte est à la fois en <strong> ET en <em> */
+  font-weight: bold;
+  font-style: italic; /* déclenche le bloc @font-face "BoldItalic" défini plus haut */
 }

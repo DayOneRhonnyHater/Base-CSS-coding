@@ -1,89 +1,204 @@
+/* ==========================================================================
+   STYLES DE BASE (approche "mobile first" = on pense d'abord au téléphone)
+   Ces règles s'appliquent à TOUTES les tailles d'écran par défaut.
+   On commence petit (téléphone) puis on AJOUTE/MODIFIE des styles au fur
+   et à mesure que l'écran devient plus grand (tablette, puis ordinateur).
+   ========================================================================== */
+
 *{
-  /* L'étoile * veut dire "TOUS les éléments de la page", sans exception */
-  margin:0;   /* enlève l'espace extérieur que les navigateurs ajoutent par défaut */
-  padding:0;  /* enlève l'espace intérieur ajouté par défaut */
-  box-sizing: border-box; /* évite que les espaces internes agrandissent la taille des boîtes */
+  /* * = tous les éléments de la page, sans exception */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 body{
-  /* <body> = tout ce qui s'affiche réellement sur la page */
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  /* liste de polices d'écriture : l'ordinateur utilise la première qu'il connaît */
-  color: #000; /* couleur du texte : noir */
-  background-color: white; /* couleur de fond de toute la page : blanc */
+  color: #000;
+  background-color: white;
+  line-height: 1.5; /* espace entre les lignes de texte, pour une lecture plus confortable */
 }
-header{
-  /* le bandeau tout en haut du site */
+
+.container{
+  /* une boîte invisible qui centre le contenu et gère les marges sur les côtés */
   width: 100%;
-  height: auto; /* la hauteur s'ajuste automatiquement selon le contenu */
-  padding: 5%; /* espace intérieur, proportionnel à la largeur de l'écran */
-  background-color:#8c9a38; /* couleur de fond vert olive */
-  font-size: 2rem; /* taille du texte à l'intérieur */
-  /*display: flex;
-  justify-content:space-between;*/
-  /* ces 2 lignes sont "commentées" (désactivées), donc ignorées par le navigateur pour l'instant */
+  padding: 0 1rem;
+  margin: 0 auto; /* centre horizontalement */
 }
-header div{
-  /* toutes les boîtes <div> qui se trouvent À L'INTÉRIEUR du header */
-  width: 40%;
-  height: auto;
-  background-color:none; /* pas de couleur de fond */
+
+header{
+  width: 100%;
+  padding: 5%;
+  background-color: #8c9a38;
 }
+
 img{
-  /* toutes les images du site */
-  width: 100%;  /* une image ne dépasse jamais la largeur de sa boîte */
-  height: auto; /* la hauteur s'ajuste toute seule, sans déformer l'image */
+  width: 100%;
+  height: auto;
+  display: block;
 }
+
+/* Menu mobile : caché par défaut, s'ouvre grâce au bouton hamburger (le JavaScript ajoute la classe "open") */
 nav{
-  /* le menu de navigation */
-  display:none; /* caché par défaut (probablement affiché plus tard via JavaScript) */
+  display: none;
 }
+nav.open{
+  display: block; /* dès que la classe "open" est ajoutée, le menu redevient visible */
+}
+
 .hamburger{
-  /* le petit bouton "≡" pour ouvrir le menu sur mobile */
-  background: none;
-  border: none;
-  position: absolute; /* placé à un endroit précis, par-dessus le reste du contenu */
-  z-index: 2; /* reste au-dessus des autres éléments qui se chevauchent */
-  top:30px;   /* à 30px du haut */
-  right:30px; /* à 30px de la droite */
-  line-height: 45px;
-  color: #ffffff; /* texte blanc */
-  font-size: 0.75em;
-}
-.cross{
-  /* le bouton "X" pour refermer le menu, une fois qu'il est ouvert */
+  display: block;
   background: none;
   border: none;
   position: absolute;
   z-index: 2;
-  top:30px;
-  right:30px;
-  line-height: 45px;
+  top: 30px;
+  right: 30px;
   color: #ffffff;
-  font-size: 2em;
+  font-size: 1.5em;
 }
-.menu{
-  /* la boîte qui contient les liens du menu quand il est ouvert */
-  width: 100%;
-  position: relative;
-  top: 45px;
-  right: 45px;
-  z-index: 1;
-  text-align: center; /* le texte est centré */
-  font-size: 12px;
-  font-weight: bold; /* texte en gras */
+
+/* Grille simple à 1 seule colonne sur téléphone (les cartes s'empilent verticalement) */
+.grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
-.menu ul{
-  list-style: none; /* enlève les petits points devant chaque lien de la liste */
-}
-.menu li{
-  /* pas de style particulier ici pour l'instant */
-}
-.menu a{
-  text-decoration: none; /* enlève le soulignement bleu par défaut des liens */
-}
+
 h1{
-  /* le plus gros titre de la page */
-  width: 100%;
-  height: auto;
-  margin: 3vh auto; /* centré horizontalement, avec de l'espace au-dessus/en dessous */
+  font-size: 1.5rem;
+  margin: 3vh auto;
+}
+
+h2{
+  font-size: 1.25rem;
+}
+
+p{
+  font-size: 1rem;
+}
+
+
+/* ==========================================================================
+   TÉLÉPHONES (portrait et paysage)
+   Environ 320px jusqu'à 599px de large.
+   Ce sont les styles de base ci-dessus qui s'appliquent — pas besoin de
+   "@media" puisque c'est déjà la base pensée pour mobile. Le bloc juste en
+   dessous ne concerne que les téléphones un peu plus larges (ex: en mode
+   paysage, tourné sur le côté).
+   ========================================================================== */
+@media only screen and (min-width: 480px){
+  /* Ce bloc s'active seulement si l'écran fait AU MOINS 480px de large */
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+    /* passe de 1 à 2 colonnes */
+  }
+}
+
+
+/* ==========================================================================
+   TABLETTES / IPAD (portrait et paysage)
+   iPad Mini/Air/Pro en portrait ~= 768px à 834px
+   iPad en paysage ~= 1024px à 1194px
+   On cible la plage classique des tablettes avec min-width: 600px (début
+   tablette) jusqu'à 1024px (juste avant que les styles ordinateur prennent le relais).
+   ========================================================================== */
+@media only screen and (min-width: 600px) and (max-width: 1024px){
+  .container{
+    padding: 0 2rem; /* un peu plus d'espace sur les côtés que sur mobile */
+  }
+
+  header{
+    padding: 3%;
+  }
+
+  /* On cache le bouton hamburger et on affiche directement le menu complet, comme sur ordinateur */
+  .hamburger{
+    display: none;
+  }
+  nav{
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .grid{
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  h1{
+    font-size: 2rem;
+  }
+  h2{
+    font-size: 1.5rem;
+  }
+}
+
+/* Réglage précis pour iPad en mode portrait (768px - 834px) */
+@media only screen and (min-width: 768px) and (max-width: 834px) and (orientation: portrait){
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Réglage précis pour iPad en mode paysage (1024px - 1194px) */
+@media only screen and (min-width: 1024px) and (max-width: 1194px) and (orientation: landscape){
+  .grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* ==========================================================================
+   ORDINATEURS / BUREAU / PORTABLES
+   Tout ce qui fait 1025px de large ou plus (après la fin des tablettes en paysage).
+   ========================================================================== */
+@media only screen and (min-width: 1025px){
+  .container{
+    max-width: 1200px; /* le contenu ne s'étire plus au-delà de 1200px, même sur très grand écran */
+    padding: 0 3rem;
+  }
+
+  header{
+    padding: 2% 5%;
+    display: flex;
+    justify-content: space-between; /* logo à gauche, menu à droite */
+    align-items: center;
+  }
+
+  .hamburger{
+    display: none;
+  }
+  nav{
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+  }
+
+  .grid{
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  h1{
+    font-size: 2.5rem;
+  }
+  h2{
+    font-size: 1.75rem;
+  }
+  p{
+    font-size: 1.05rem;
+  }
+}
+
+/* Très grands écrans (1440px et plus) */
+@media only screen and (min-width: 1440px){
+  .container{
+    max-width: 1400px;
+  }
+
+  h1{
+    font-size: 3rem;
+  }
 }
